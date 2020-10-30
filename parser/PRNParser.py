@@ -63,10 +63,31 @@ with open(opts['-d'], "r", encoding = "utf-8") as input_file:
         event = []
       else:
         if not (len(lastEvent) > 2 and lastEvent[2] == 'FINAL'):
-          event.append({
-            'name': line[1],
-            'club': line[2]
-          })
+          print(line)
+          if (len(line) == 4):
+            event.append({
+              'name': line[1].strip(),
+              'age': None,
+              'club': line[2].strip(),
+              'sub_time': None,
+              'blank_time': ''
+            })
+          elif (len(line) == 5):
+            event.append({
+              'name': line[1].strip(),
+              'age': line[2].strip(),
+              'club': line[3].strip(),
+              'sub_time': None,
+              'blank_time': ''
+            })
+          elif (len(line) == 6):
+            event.append({
+              'name': line[1].strip(),
+              'age': line[2].strip(),
+              'club': line[3].strip(),
+              'sub_time': line[4].strip(),
+              'blank_time': ''
+            })
         else:
           event.append({
             'name': "",

@@ -17,6 +17,23 @@ View example programmes on the Chester-le-Street ASC website;
 
 ## Usage
 
+### Producing a PRN File
+
+In SPORTSYSTEMS Meet Organisation, go to `Before Meet` -> `Meet Sheet` -> `Meet`. In the dialog box that appears;
+
+![SPORTSYSTEMS Meet Sheet settings dialog box](./docs/img/meet-sheet-popup.png "Meet Sheet settings dialog box")
+
+Ensure you have selected;
+
+* Output Options: File
+* File Delimiter: Tab
+* Columns: Single
+* Club Name Format: Meet Name
+
+For all other options, such as Format Options, feel free to make your own choices.
+
+### Parsing the PRN File
+
 You should run the PRNParser script from the command line as follows. 
 
 ```bash
