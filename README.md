@@ -27,4 +27,4 @@ Where argument `-d` is the path to the PRN file.
 
 This will output a file called `data.json` which will be used by the web viewer, a collection of PHP scripts which you can upload to your club's web server. *Not yet in this repo!*
 
-Eventually, a program will be created which produces webpages for you, in a static format that you can upload to your club website.# PRN-Parser
+Eventually, a program will be created which produces webpages for you, in a static format that you can upload to your club website.
