@@ -60,6 +60,44 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
       footer .focus-highlight a:focus {
         color: #212529;
       }
+      body {
+        padding-bottom: 3.25rem;
+      }
+
+      .two-columns {
+        display: grid;
+        gap: 0 30px;
+        list-style-position: inside;
+        padding-left: 0;
+      }
+
+      .two-columns ::marker {
+        width: 20px;
+        float: left;
+      }
+
+      .two-columns .row {
+        width: calc(100% - 20px);
+        float: right;
+      }
+
+      .two-columns li:nth-child(n+2) {
+        border-top:solid 1px #eee;
+      }
+
+      @media screen and (min-width: 992px) {
+        .two-columns {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .two-columns li:nth-child(n+1) {
+          border-top:none;
+        }
+
+        /* .two-columns li:nth-child(4n-1), .two-columns li:nth-child(4n) {
+          background: #eee;
+        } */
+      }
     </style>
 
   </head>
@@ -69,36 +107,32 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
       <a href="#maincontent">Skip to main content</a>
     </div>
 
+    <nav class="navbar fixed-bottom navbar-dark bg-primary">
+      <form class="d-block w-100">
+        <div class="form-group mb-0">
+        <select class="custom-select" id="event-select">
+          <option disabled selected>Select event</option>
+          <?php foreach($file as $id => $event) { ?>
+          <?php if (strpos($event->event, 'FINAL') === false) { ?>
+          <option value="<?=htmlspecialchars('event-' . ($id+1))?>">
+            <?=htmlspecialchars($event->event)?>
+          </option>
+          <?php } ?>
+          <?php } ?>
+        </select>
+        </div>
+      </form>
+    </nav>
+
     <div class="d-print-none mb-3">
 
-      <div class="text-white py-2 top-bar bg-primary-dark" style="font-size:0.875rem;">
-        <div class="container-fluid d-flex">
-          <div class="mr-auto hide-a-underline">
-            <span class="mr-2">
-              <a href="https://www.twitter.com/myswimmingclub" target="_blank" class="text-white" title="Twitter">
-                <i class="fa fa-twitter fa-fw" aria-hidden="true"></i>
-                <span class="sr-only">Swimming Club Data Systems on Twitter</span>
-              </a>
-            </span>
-          </div>
-
-          <span class="d-flex" id="top-bar-visible">
-            <div class="ml-2 top-bar">
-              <a href="https://membership.myswimmingclub.uk" class="text-white" title="Learn about SCDS Membership Software">
-                Membership Software
-              </a>
-            </div>
-          </span>
-        </div>
-      </div>
-
-      <div class="text-white py-3 d-none d-lg-flex bg-primary-darker">
+      <div class="text-dark py-3 d-lg-flex bg-light">
         <div class="container-fluid">
           <div class="row align-items-center">
             <div class="col-auto">
               <img class="rounded" src="./assets/img/scds.png" alt="SCDS Logo" style="height: 75px">
             </div>
-            <div class="col"><div class="h1 text-white">Online Gala Programme</div></div>
+            <div class="col"><div class="h1">Online Gala Programme</div></div>
           </div>
         </div>
       </div>
@@ -110,44 +144,6 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
     <!--
       PROGRAMME OUTPUT
     -->
-
-    <style>
-    .two-columns {
-      display: grid;
-      gap: 0 20px;
-      list-style-position: inside;
-      padding-left: 0;
-    }
-
-    .two-columns ::marker {
-      width: 20px;
-      float: left;
-    }
-
-    .two-columns .row {
-      width: calc(100% - 20px);
-      float: right;
-    }
-
-    .two-columns li:nth-child(even) {
-      background: #eee;
-    }
-
-    @media screen and (min-width: 992px) {
-      .two-columns {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .two-columns li:nth-child(even) {
-        background: none;
-      }
-
-      /* .two-columns li:nth-child(4n-1), .two-columns li:nth-child(4n) {
-        background: #eee;
-      } */
-    }
-
-    </style>
 
     <div class="container-fluid">
       <div class="row">
@@ -171,30 +167,7 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
       </div>
 
       <div class="row">
-        <div class="col order-md-1">
-          <div class="position-sticky top-3 mb-3">
-            <div class="card">
-              <div class="card-header">
-                Jump to event
-              </div>
-              <div class="card-body">
-                <p>Quickly jump to an event</p>
-
-                <select class="custom-select" id="event-select">
-                  <option disabled selected>Select event</option>
-                  <?php foreach($file as $id => $event) { ?>
-                  <?php if (strpos($event->event, 'FINAL') === false) { ?>
-                  <option value="<?=htmlspecialchars('event-' . ($id+1))?>">
-                    <?=htmlspecialchars($event->event)?>
-                  </option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-9 col-lg-10 order-md-0">
+        <div class="col">
           <?php foreach($file as $id => $event) { ?>
             <h2 id="<?=htmlspecialchars('event-' . ($id+1))?>"><?=htmlspecialchars($event->event)?></h2>
             <p><a href="#maincontent">Back to top</a></p>
@@ -203,21 +176,21 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
               <?php if ($swimmer->name != "") { ?>
               <li>
                 <div class="row">
-                  <div class="col-5 text-truncate">
+                  <div class="col-6 col-md-5 col-xl-4 text-truncate">
                     <?=htmlspecialchars($swimmer->name)?>
                   </div>
                   <?php if ($swimmer->age !== null) { ?>
-                  <div class="col-1 text-truncate">
+                  <div class="col-1 col-md-2 col-lg-3 text-truncate">
                     <?=htmlspecialchars($swimmer->age)?>
                   </div>
                   <?php } ?>
                   <div class="col">
-                    <div class="row">
-                    <div class="col-12 col-lg text-truncate">
+                    <div class="form-row">
+                    <div class="col-12 col-lg text-truncate text-right text-lg-left">
                       <?=htmlspecialchars($swimmer->club)?>
                     </div>
                     <?php if ($swimmer->sub_time !== null) { ?>
-                    <div class="col-12 col-lg text-truncate mono">
+                    <div class="col-12 col-lg text-truncate mono text-right">
                       <?=htmlspecialchars($swimmer->sub_time)?>
                     </div>
                     <?php } ?>
