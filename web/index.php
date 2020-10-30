@@ -148,20 +148,16 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-9 col-lg-8">
-          <p>
-            This is a new kind of gala programme and has been produced using software created by <a href="https://myswimmingclub.uk" target="_blank">Swimming Club Data Systems</a> and <a href="https://www.chesterlestreetasc.co.uk/" target="_blank">Chester-le-Street ASC</a>.
+          <p class="lead">
+            This is a new kind of gala programme being trialled by <a href="https://myswimmingclub.uk" target="_blank">Swimming Club Data Systems</a> and <a href="https://www.chesterlestreetasc.co.uk/" target="_blank">Chester-le-Street ASC</a>.
           </p>
 
           <p class="d-none d-md-block">
-            Please note that unlike a normal gala programme, the order of entries runs accross and down rather than down and then accross. This is because on some screens, the list of entries for an event could run off the end of the screen, making for a poor user experience.
+            Please note that unlike a normal gala programme, the order of entries runs accross and down rather than down and then accross.
           </p>
 
           <p>
             We would appreciate if you could <a href="mailto:feedback@myswimmingclub.uk">give us feedback</a>, or <a target="_blank" href="https://github.com/Swimming-Club-Data-Systems/PRN-Parser">check out this project on GitHub</a>.
-          </p>
-
-          <p>
-            &copy; Swimming Club Data Systems 2020
           </p>
         </div>
       </div>
@@ -180,7 +176,7 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
                     <?=htmlspecialchars($swimmer->name)?>
                   </div>
                   <?php if ($swimmer->age !== null) { ?>
-                  <div class="col-1 col-md-2 col-lg-3 text-truncate">
+                  <div class="col-1 col-xl-3 text-truncate">
                     <?=htmlspecialchars($swimmer->age)?>
                   </div>
                   <?php } ?>
@@ -225,6 +221,10 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
 
             <p class="mb-2">
               <a class="text-white font-weight-bold" target="_blank" href="https://github.com/Swimming-Club-Data-Systems/PRN-Parser">View on GitHub</a>.
+            </p>
+
+            <p class="mb-2">
+              Display sizes - <span class="d-xs-inline">XS</span><span class="d-none d-sm-inline">, SM</span><span class="d-none d-md-inline">, MD</span><span class="d-none d-lg-inline">, LG</span><span class="d-none d-xl-inline">, XL</span>
             </p>
             
             <p class="mb-0 source-org vcard copyright">
