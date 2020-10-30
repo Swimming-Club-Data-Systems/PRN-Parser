@@ -63,7 +63,7 @@ with open(opts['-d'], "r", encoding = "utf-8") as input_file:
         event = []
       else:
         if not (len(lastEvent) > 2 and lastEvent[2] == 'FINAL'):
-          print(line)
+          # print(line)
           if (len(line) == 4):
             event.append({
               'name': line[1].strip(),
