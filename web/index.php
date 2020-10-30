@@ -150,12 +150,25 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
             </div>
             <select class="custom-select" id="event-select">
               <!-- <option disabled selected>Jump to an event</option> -->
-              <?php foreach ($file as $id => $event) { ?>
-                <?php if (strpos($event->event, 'FINAL') === false) { ?>
-                  <option value="<?= htmlspecialchars('event-' . ($id + 1)) ?>">
-                    <?= htmlspecialchars($event->event) ?>
-                  </option>
+              <?php foreach ($file->sessions as $session) { ?>
+
+
+                <?php if (sizeof($file->sessions) > 1) { ?>
+                  <optgroup label="<?= htmlspecialchars('Session ' . $session->id) ?>">
+                  <?php } ?>
+
+                  <?php foreach ($session->events as $event) { ?>
+                    <?php if (strpos($event->event, 'FINAL') === false) { ?>
+                      <option value="<?= htmlspecialchars('event-' . ($event->id)) ?>">
+                        <?= htmlspecialchars('Event ' . $event->id . ' ' . $event->name) ?>
+                      </option>
+                    <?php } ?>
+                  <?php } ?>
+
+                  <?php if (sizeof($file->sessions) > 1) { ?>
+                  </optgroup>
                 <?php } ?>
+
               <?php } ?>
             </select>
           </div>
@@ -200,66 +213,87 @@ Yes! We built this in house. Not many clubs do. We don't cheat.
           This is a new kind of gala programme being trialled by <a href="https://myswimmingclub.uk" target="_blank">Swimming Club Data Systems</a> and <a href="https://www.chesterlestreetasc.co.uk/" target="_blank">Chester-le-Street ASC</a>.
         </p>
 
-        <p class="d-none d-md-block">
-          Please note that unlike a normal gala programme, the order of entries runs accross and down rather than down and then accross.
-        </p>
-
         <p>
           We would appreciate if you could <a href="mailto:feedback@myswimmingclub.uk">give us feedback</a>, or <a target="_blank" href="https://github.com/Swimming-Club-Data-Systems/PRN-Parser">check out this project on GitHub</a>.
         </p>
 
-        <?php foreach ($file as $id => $event) { ?>
-          <h2 id="<?= htmlspecialchars('event-' . ($id + 1)) ?>"><?= htmlspecialchars($event->event) ?></h2>
+        <?php if (sizeof($file->sessions) > 1) { ?>
+          <div class="bg-primary p-3 mb-3 rounded text-white">
+            <h2>Sessions</h2>
+            <p class="lead">
+              Jump to a session.
+            </p>
 
-          <div>
-            <div class="position-sticky top-0 bg-primary text-white">
-              <div class="form-row event-column-header font-weight-bold">
-                <div class="col-5 col-xl-4 text-truncate">
-                  Name
-                </div>
-                <?php if (true) { ?>
-                  <div class="col-1 col-xl-3">
-                    Age
-                  </div>
-                <?php } ?>
-                <div class="col text-truncate">
-                  Club
-                </div>
-                <?php if (true) { ?>
-                  <div class="col time-cell text-truncate text-right">
-                    Entry time
-                  </div>
-                <?php } ?>
-              </div>
-            </div>
-
-            <ol class="two-columns">
-              <?php foreach ($event->swims as $swimmer) { ?>
-                <?php if ($swimmer->name != "") { ?>
-                  <li>
-                    <div class="form-row">
-                      <div class="col-5 col-xl-4 text-truncate">
-                        <?= htmlspecialchars($swimmer->name) ?>
-                      </div>
-                      <?php if ($swimmer->age !== null) { ?>
-                        <div class="col-1 col-xl-3 text-truncate">
-                          <?= htmlspecialchars($swimmer->age) ?>
-                        </div>
-                      <?php } ?>
-                      <div class="col text-truncate">
-                        <?= htmlspecialchars($swimmer->club) ?>
-                      </div>
-                      <?php if ($swimmer->sub_time != null) { ?>
-                        <div class="col time-cell text-truncate text-right">
-                          <?= htmlspecialchars($swimmer->sub_time) ?>
-                        </div>
-                      <?php } ?>
-                    </div>
-                  </li>
-                <?php } else { ?><li></li><?php } ?>
+            <ul class="list-unstyled mb-0">
+              <?php foreach ($file->sessions as $session) { ?>
+                <li><a href="#<?= htmlspecialchars('session-' . ($session->id)) ?>" class="text-white">Session <?= htmlspecialchars($session->id) ?></a></li>
               <?php } ?>
-            </ol>
+            </ul>
           </div>
+        <?php } ?>
+
+        <?php foreach ($file->sessions as $session) { ?>
+
+          <?php if (sizeof($file->sessions) > 1) { ?>
+            <h2 id="<?= htmlspecialchars('session-' . ($session->id)) ?>">Session <?= htmlspecialchars($session->id) ?></h2>
+          <?php } ?>
+
+          <?php foreach ($session->events as $event) { ?>
+            <h3 id="<?= htmlspecialchars('event-' . ($event->id)) ?>">
+              <small class="text-muted font-weight-bold">Event <?= htmlspecialchars($event->id) ?></small><br>
+              <?= htmlspecialchars($event->name) ?>
+            </h3>
+
+            <div>
+              <div class="position-sticky top-0 bg-primary text-white">
+                <div class="form-row event-column-header font-weight-bold">
+                  <div class="col-5 col-xl-4 text-truncate">
+                    Name
+                  </div>
+                  <?php if (true) { ?>
+                    <div class="col-1 col-xl-3">
+                      Age
+                    </div>
+                  <?php } ?>
+                  <div class="col text-truncate">
+                    Club
+                  </div>
+                  <?php if (true) { ?>
+                    <div class="col time-cell text-truncate text-right">
+                      Entry time
+                    </div>
+                  <?php } ?>
+                </div>
+              </div>
+
+              <ol class="two-columns">
+                <?php foreach ($event->swims as $swimmer) { ?>
+                  <?php if ($swimmer->name != "") { ?>
+                    <li>
+                      <div class="form-row">
+                        <div class="col-5 col-xl-4 text-truncate">
+                          <?= htmlspecialchars($swimmer->name) ?>
+                        </div>
+                        <?php if ($swimmer->age !== null) { ?>
+                          <div class="col-1 col-xl-3 text-truncate">
+                            <?= htmlspecialchars($swimmer->age) ?>
+                          </div>
+                        <?php } ?>
+                        <div class="col text-truncate">
+                          <?= htmlspecialchars($swimmer->club) ?>
+                        </div>
+                        <?php if ($swimmer->sub_time != null) { ?>
+                          <div class="col time-cell text-truncate text-right">
+                            <?= htmlspecialchars($swimmer->sub_time) ?>
+                          </div>
+                        <?php } ?>
+                      </div>
+                    </li>
+                  <?php } else { ?><li></li><?php } ?>
+                <?php } ?>
+              </ol>
+            </div>
+          <?php } ?>
         <?php } ?>
       </div>
     </div>
