@@ -37,8 +37,14 @@ if len(args) > 0:
 ################################################################
 
 data = {}
+sessions = []
 events = []
 event = []
+
+lastSession = {
+  'id': 1,
+  'events': []
+}
 lastEvent = {}
 
 with open(opts['-d'], "r", encoding = "utf-8") as input_file:
@@ -56,10 +62,28 @@ with open(opts['-d'], "r", encoding = "utf-8") as input_file:
         if len(event) > 0:
           events.append({
             'event': ' '.join(lastEvent),
+            'id': lastEvent[1],
+            'name': ' '.join(lastEvent[2:]),
             'swims': event
           })
+
+          # If new session, add to list and create blank session
+          event_number = line[0].split()[1]
+          if (len(event_number) > 2):
+            # Assume we're using 101/201 numbering convention
+            if (int(event_number[:-2]) != lastSession['id']):
+              lastSession['events'] = events
+              sessions.append(lastSession)
+
+              events = []
+              lastSession = {
+                'id': int(event_number[:-2]),
+                'events': []
+              }
+
           event = []
         lastEvent = line[0].split()
+        print(line[0].split())
         event = []
       else:
         if not (len(lastEvent) > 2 and lastEvent[2] == 'FINAL'):
@@ -97,11 +121,20 @@ with open(opts['-d'], "r", encoding = "utf-8") as input_file:
 if len(event) > 0:
   events.append({
     'event': ' '.join(lastEvent),
+    'id': lastEvent[1],
+    'name': ' '.join(lastEvent[2:]),
     'swims': event
   })
+
+  lastSession['events'] = events
+  sessions.append(lastSession)
 
 # json_data = json.dumps(data)
 # print(json_data)
 
+json_dict = {
+  'sessions': sessions
+}
+
 with open('data.json', 'w') as f:
-  json.dump(events, f)
+  json.dump(json_dict, f)
